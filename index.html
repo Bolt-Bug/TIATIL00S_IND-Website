@@ -216,7 +216,7 @@
         <div class="test-section">
             <h2>Submit Score</h2>
             <div class="input-group">
-                <input type="number" id="score-input" placeholder="Enter score (integer)" min="0">
+                <input type="number" id="score-input" placeholder="Enter score (number)" step="0.01" min="0">
                 <button onclick="submitScore()">Submit</button>
             </div>
             <div id="status" class="status"></div>
@@ -224,7 +224,7 @@
             <div class="api-info">
                 <h3>API Endpoint for Unity</h3>
                 <p><strong>POST:</strong> <code>/api/score</code></p>
-                <p><strong>Body:</strong> <code>{"score": 1000}</code></p>
+                <p><strong>Body:</strong> <code>{"score": 1234.56}</code></p>
                 <p style="margin-top: 10px;"><strong>GET:</strong> <code>/api/scores</code></p>
                 <p><strong>Returns:</strong> Top 5 scores</p>
             </div>
@@ -262,7 +262,7 @@
             scoresList.innerHTML = scores.map((score, index) => `
                 <div class="score-item">
                     <span class="rank rank-${index + 1}">#${index + 1}</span>
-                    <span class="score">${score.toLocaleString()}</span>
+                    <span class="score">${score.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
                 </div>
             `).join('');
         }
@@ -270,7 +270,7 @@
         async function submitScore() {
             const input = document.getElementById('score-input');
             const status = document.getElementById('status');
-            const score = parseInt(input.value);
+            const score = parseFloat(input.value);
 
             if (isNaN(score)) {
                 showStatus('Please enter a valid number', 'error');

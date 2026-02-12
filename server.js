@@ -14,8 +14,8 @@ app.post('/api/score', (req, res) => {
     try {
         const { score } = req.body;
         
-        if (typeof score !== 'number' || !Number.isInteger(score)) {
-            return res.status(400).json({ error: 'Score must be an integer' });
+        if (typeof score !== 'number' || isNaN(score)) {
+            return res.status(400).json({ error: 'Score must be a number' });
         }
 
         // Add score to array
